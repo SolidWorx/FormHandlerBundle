@@ -1,6 +1,6 @@
 # FormHandlerBundle
 
-[![Build Status](https://travis-ci.org/SolidWorx/FormHandler.svg)](https://travis-ci.org/SolidWorx/FormHandler)
+[![Build Status](https://travis-ci.org/SolidWorx/FormHandlerBundle.svg)](https://travis-ci.org/SolidWorx/FormHandlerBundle)
 
 The FormHandler component attempts to make controllers with basic form handlers cleaner by off-loading form handling to separate classes.
 
