@@ -1,0 +1,16 @@
+services:
+    solidworx.form_handler.success:
+        class: SolidWorx\FormHandler\Event\Listener\FormSuccessListener
+        arguments: ['@session']
+        tags:
+          - { name: 'kernel.event_subscriber' }
+
+    solidworx.form_handler.fail:
+        class: SolidWorx\FormHandler\Event\Listener\FormFailListener
+        tags:
+          - { name: 'kernel.event_subscriber' }
+
+    solidworx.form_handler.form_request:
+        class: SolidWorx\FormHandler\Event\Listener\FormHandlerResponseListener
+        tags:
+          - { name: 'kernel.event_subscriber' }

@@ -1,0 +1,21 @@
+language: php
+
+sudo: false
+
+matrix:
+  include:
+    - php: hhvm
+    - php: 7.1
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+before_install:
+  - composer self-update
+
+install:
+  - composer install
+
+script:
+    - vendor/bin/phpunit
