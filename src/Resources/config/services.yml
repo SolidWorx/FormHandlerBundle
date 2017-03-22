@@ -1,4 +1,8 @@
 services:
+    solidworx.form_handler:
+        class: SolidWorx\FormHandler\FormHandler
+        arguments: ['@request_stack', '@event_dispatcher', '@form.factory']
+
     solidworx.form_handler.success:
         class: SolidWorx\FormHandler\Event\Listener\FormSuccessListener
         arguments: ['@session']

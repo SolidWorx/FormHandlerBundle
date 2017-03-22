@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace SolidWorx\FormHandler;
 
+use ProxyManager\Proxy\ProxyInterface;
 use SolidWorx\FormHandler\Event\FormHandlerEvent;
 use SolidWorx\FormHandler\Event\FormHandlerEvents;
 use SolidWorx\FormHandler\Exception\InvalidHandlerException;
@@ -65,7 +66,11 @@ final class FormHandler
      */
     public function registerHandler(FormHandlerInterface $handler): void
     {
-        $class = get_class($handler);
+        if ($handler instanceof ProxyInterface) {
+            $class = get_parent_class($handler);
+        } else {
+            $class = get_class($handler);
+        }
 
         if (isset($this->handlers[$class])) {
             throw new NonUniqueHandlerException($handler);
@@ -86,12 +91,11 @@ final class FormHandler
         $form = $this->getForm($handler, $options);
         $formRequest = new FormRequest($form, $this->request, new Response(), $options);
 
+        $form->handleRequest($this->request);
+
         if ($handler instanceof FormHandlerResponseInterface) {
             $formRequest->setResponse($handler->getResponse($formRequest));
         }
-
-        $form->handleRequest($this->request);
-
         if (!$form->isSubmitted()) {
             return $formRequest;
         }

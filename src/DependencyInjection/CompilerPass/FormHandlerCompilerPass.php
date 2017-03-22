@@ -24,15 +24,15 @@ class FormHandlerCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('form.handler')) {
+        if (!$container->hasDefinition('solidworx.form_handler')) {
             return;
         }
 
-        $formHandlerDefinition = $container->getDefinition('form.handler');
+        $formHandlerDefinition = $container->getDefinition('solidworx.form_handler');
         $serviceIds = $container->findTaggedServiceIds('form.handler');
 
         foreach (array_keys($serviceIds) as $serviceId) {
-            $formHandlerDefinition->addMethodCall('registerHandler', new Reference($serviceId));
+            $formHandlerDefinition->addMethodCall('registerHandler', [new Reference($serviceId)]);
         }
     }
 }
