@@ -25,7 +25,7 @@ class FormRequest
     private $request;
 
     /**
-     * @var Response
+     * @var mixed
      */
     private $response;
 
@@ -72,15 +72,15 @@ class FormRequest
     /**
      * @return Response
      */
-    public function getResponse(): Response
+    public function getResponse()
     {
         return $this->response;
     }
 
     /**
-     * @param Response $response
+     * @param mixed $response
      */
-    public function setResponse(Response $response): void
+    public function setResponse($response): void
     {
         $this->response = $response;
     }

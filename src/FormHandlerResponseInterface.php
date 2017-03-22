@@ -22,7 +22,7 @@ interface FormHandlerResponseInterface
      *
      * @param FormRequest $formRequest
      *
-     * @return Response
+     * @return mixed
      */
-    public function getResponse(FormRequest $formRequest): Response;
+    public function getResponse(FormRequest $formRequest);
 }

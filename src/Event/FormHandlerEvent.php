@@ -32,7 +32,7 @@ class FormHandlerEvent extends Event
     private $handler;
 
     /**
-     * @var Response
+     * @var mixed
      */
     private $response;
 
@@ -86,17 +86,17 @@ class FormHandlerEvent extends Event
     }
 
     /**
-     * @param Response $response
+     * @param mixed $response
      */
-    public function setResponse(Response $response): void
+    public function setResponse($response): void
     {
         $this->response = $response;
     }
 
     /**
-     * @return Response
+     * @return mixed
      */
-    public function getResponse(): ?Response
+    public function getResponse()
     {
         return $this->response;
     }
