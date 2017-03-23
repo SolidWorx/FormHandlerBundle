@@ -101,7 +101,7 @@ class MyController extends Controller
 {
     public function addAction()
     {
-        return $this->get('form.handler')->handle(MyFormHandler::class); // MyFormHandler will automatically be pulled from the container if it is tagges with `form.handler`
+        return $this->get('solidworx.form_handler')->handle(MyFormHandler::class); // MyFormHandler will automatically be pulled from the container if it is tagges with `form.handler`
     }
 }
 ```
