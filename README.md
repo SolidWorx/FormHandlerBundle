@@ -26,6 +26,26 @@ FormHandler requires PHP 7.1+ and Symfony 3.0+
 $ composer require solidworx/form-handler-bundle:^1.0
 ```
 
+Then register the bundle in your Symfony application:
+
+```php
+<?php
+
+// app/AppKernel.php
+
+// ...
+    public function registerBundles()
+    {
+        $bundles = [
+            // ...
+            new SolidWorx\FormHandler\FormHandlerBundle(),
+        ];
+        
+        // ...
+    )
+
+```
+
 ## Usage
 
 A form can have a class that implements the `FormHandlerInterface` interface. This interface exposes a single method in which the form can be retrieved:
@@ -74,12 +94,14 @@ services:
 
 Inside your controller, use the `form.handler` service to handle your form:
 
-```
+```php
+<?php
+
 class MyController extends Controller
 {
     public function addAction()
     {
-        return $this->get('form.handler')->handle(MyFormHandler::class); // MyFormHandler will automatically be pulled from the container
+        return $this->get('form.handler')->handle(MyFormHandler::class); // MyFormHandler will automatically be pulled from the container if it is tagges with `form.handler`
     }
 }
 ```
@@ -142,10 +164,10 @@ $ vendor/bin/phpunit
 
 ## Contributing
 
-See [CONTRIBUTING](https://github.com/SolidWorx/Toggler/blob/master/CONTRIBUTING.md)
+See [CONTRIBUTING](https://github.com/SolidWorx/FormHandlerBundle/blob/master/CONTRIBUTING.md)
 
 ## License
 
-Toggler is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+FormHandler is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 
 Please see the [LICENSE](LICENSE) file for the full license.
