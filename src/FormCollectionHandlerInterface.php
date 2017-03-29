@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the FormHandler package.
  *
@@ -11,11 +9,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace SolidWorx\FormHandler\Event;
+namespace SolidWorx\FormHandler;
 
-class FormHandlerEvents
+interface FormCollectionHandlerInterface
 {
-    const EVENT_FORM_SUCCESS = 'form_handler.success';
-
-    const EVENT_FORM_FAIL = 'form_handler.fail';
 }

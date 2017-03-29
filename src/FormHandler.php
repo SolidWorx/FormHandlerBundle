@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace SolidWorx\FormHandler;
 
 use ProxyManager\Proxy\ProxyInterface;
+use SolidWorx\FormHandler\Decorator\FormCollectionDecorator;
 use SolidWorx\FormHandler\Event\FormHandlerEvent;
 use SolidWorx\FormHandler\Event\FormHandlerEvents;
 use SolidWorx\FormHandler\Exception\InvalidHandlerException;
@@ -66,10 +67,17 @@ final class FormHandler
      */
     public function registerHandler(FormHandlerInterface $handler): void
     {
-        if ($handler instanceof ProxyInterface) {
-            $class = get_parent_class($handler);
-        } else {
-            $class = get_class($handler);
+        switch (true) {
+            case $handler instanceof FormCollectionDecorator:
+                $class = $handler->getInnerHandlerClass();
+                break;
+
+            case $handler instanceof ProxyInterface:
+                $class = get_parent_class($handler);
+                break;
+
+            default:
+                $class = get_class($handler);
         }
 
         if (isset($this->handlers[$class])) {

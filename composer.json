@@ -28,10 +28,13 @@
     "require": {
         "php": ">=7.1.0",
         "symfony/framework-bundle": "^3.0",
-        "symfony/form": "^3.0"
+        "symfony/form": "^2.7 || ^3.0",
+        "solidworx/util": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0"
+        "phpunit/phpunit": "^6.0",
+        "doctrine/common": "^2.7",
+        "ocramius/proxy-manager": "^2.1"
     },
     "extra": {
         "branch-alias": {

@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace SolidWorx\FormHandler\DependencyInjection\CompilerPass;
 
+use SolidWorx\FormHandler\Decorator\FormCollectionDecorator;
+use SolidWorx\FormHandler\FormCollectionHandlerInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 class FormHandlerCompilerPass implements CompilerPassInterface
@@ -32,7 +35,41 @@ class FormHandlerCompilerPass implements CompilerPassInterface
         $serviceIds = $container->findTaggedServiceIds('form.handler');
 
         foreach (array_keys($serviceIds) as $serviceId) {
-            $formHandlerDefinition->addMethodCall('registerHandler', [new Reference($serviceId)]);
+            $formHandlerDefinition->addMethodCall('registerHandler', [new Reference($this->decorate($container, $serviceId))]);
         }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param string           $serviceId
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    private function decorate(ContainerBuilder $container, string $serviceId): string
+    {
+        $handler = $container->getDefinition($serviceId);
+
+        if (!is_a($handler->getClass(), FormCollectionHandlerInterface::class, true)) {
+            return $serviceId;
+        }
+
+        if (!$container->hasDefinition('doctrine')) {
+            $message = sprintf('You must install the doctrine/doctrine-bundle package in order to use the "FormCollectionHandlerInterface" interface on class "%s"', $handler->getClass());
+
+            if ($serviceId !== $handler->getClass()) {
+                $message .= sprintf(' for service "%s"', $serviceId);
+            }
+
+            throw new \Exception($message);
+        }
+
+        $decorator = new Definition(FormCollectionDecorator::class, [new Reference("$serviceId.inner"), new Reference('doctrine')]);
+        $decoratorId = $serviceId.'.decorator.'.random_bytes(4);
+        $container->setDefinition($decoratorId, $decorator);
+        $handler->setDecoratedService($decorator);
+
+        return $decoratorId;
     }
 }
