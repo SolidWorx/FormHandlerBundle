@@ -35,7 +35,8 @@ class FormHandlerCompilerPass implements CompilerPassInterface
         $serviceIds = $container->findTaggedServiceIds('form.handler');
 
         foreach (array_keys($serviceIds) as $serviceId) {
-            $formHandlerDefinition->addMethodCall('registerHandler', [new Reference($this->decorate($container, $serviceId))]);
+            $this->decorate($container, $serviceId);
+            $formHandlerDefinition->addMethodCall('registerHandler', [new Reference($serviceId)]);
         }
     }
 
@@ -47,29 +48,26 @@ class FormHandlerCompilerPass implements CompilerPassInterface
      *
      * @throws \Exception
      */
-    private function decorate(ContainerBuilder $container, string $serviceId): string
+    private function decorate(ContainerBuilder $container, string $serviceId)
     {
         $handler = $container->getDefinition($serviceId);
 
-        if (!is_a($handler->getClass(), FormCollectionHandlerInterface::class, true)) {
-            return $serviceId;
-        }
+        if (is_a($handler->getClass(), FormCollectionHandlerInterface::class, true)) {
+            if (!$container->hasDefinition('doctrine')) {
+                $message = sprintf('You must install the doctrine/doctrine-bundle package in order to use the "FormCollectionHandlerInterface" interface on class "%s"', $handler->getClass());
 
-        if (!$container->hasDefinition('doctrine')) {
-            $message = sprintf('You must install the doctrine/doctrine-bundle package in order to use the "FormCollectionHandlerInterface" interface on class "%s"', $handler->getClass());
+                if ($serviceId !== $handler->getClass()) {
+                    $message .= sprintf(' for service "%s"', $serviceId);
+                }
 
-            if ($serviceId !== $handler->getClass()) {
-                $message .= sprintf(' for service "%s"', $serviceId);
+                throw new \Exception($message);
             }
 
-            throw new \Exception($message);
+            $decoratorId = $serviceId.'.decorator.'.bin2hex(random_bytes(4));
+            $decorator = new Definition(FormCollectionDecorator::class, [new Reference("$decoratorId.inner"), new Reference('doctrine')]);
+            $decorator->setDecoratedService($serviceId);
+            $container->setDefinition($decoratorId, $decorator);
         }
-
-        $decorator = new Definition(FormCollectionDecorator::class, [new Reference("$serviceId.inner"), new Reference('doctrine')]);
-        $decoratorId = $serviceId.'.decorator.'.random_bytes(4);
-        $container->setDefinition($decoratorId, $decorator);
-        $handler->setDecoratedService($decorator);
-
-        return $decoratorId;
     }
 }
+
