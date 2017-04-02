@@ -108,7 +108,7 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
             return $this->handler->onFail($formRequest, $errors, $data);
         }
 
-        throw new \Exception(sprintf('Class "%s" doesn\'t implement interface "%s", so method "%s" should not be called.', $this->getInnerHandlerClass(), FormHandlerFailInterface::class, __FUNCTION__));
+        return null;
     }
 
     /**
@@ -120,7 +120,7 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
             return $this->handler->getResponse($formRequest);
         }
 
-        throw new \Exception(sprintf('Class "%s" doesn\'t implement interface "%s", so method "%s" should not be called.', $this->getInnerHandlerClass(), FormHandlerResponseInterface::class, __FUNCTION__));
+        return null;
     }
 
     /**
@@ -133,8 +133,6 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
         if ($this->handler instanceof FormHandlerSuccessInterface) {
             return $this->handler->onSuccess($data, $form);
         }
-
-        // Don't throw an exception here
 
         return null;
     }
