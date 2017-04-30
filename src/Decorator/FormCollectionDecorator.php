@@ -146,7 +146,7 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
         $em = $this->registry->getManager();
 
         foreach ($this->formData as $data) {
-            if ($data['class'] !== get_class($entity) && $data['id'] !== $entity->getId()) {
+            if ($data['class'] !== get_class($entity) || $data['id'] !== $entity->getId()) {
                 continue;
             }
 
