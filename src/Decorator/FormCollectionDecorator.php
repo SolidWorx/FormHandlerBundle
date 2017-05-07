@@ -82,11 +82,11 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
             $this->formData = FormCollection::getEntityCollections($form->getData());
         } else {
             $entity = array_reduce($options, function ($carry, $item) {
-                if (is_object($carry) && method_exists('getId', $carry)) {
+                if (is_object($carry) && method_exists($carry, 'getId')) {
                     return $carry;
                 }
 
-                if (is_object($item) && method_exists('getId', $item)) {
+                if (is_object($item) && method_exists($item, 'getId')) {
                     return $item;
                 }
 
@@ -152,13 +152,17 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
 
             $values = $entity->{$data['method']}()->toArray();
 
-            $toDel = array_filter($data['collection'], function ($object) use ($values) {
-                try {
-                    return !in_array($object->getId(), ArrayUtil::column($values, 'id'));
-                } catch (\ErrorException $e) {
-                    return false;
-                }
-            });
+            if (0 === count($values) && 0 !== count($data['collection'])) {
+                $toDel = $data['collection'];
+            } else {
+                $toDel = array_filter($data['collection'], function ($object) use ($values) {
+                    try {
+                        return !in_array($object->getId(), ArrayUtil::column($values, 'id'));
+                    } catch (\ErrorException $e) {
+                        return false;
+                    }
+                });
+            }
 
             array_walk($values, __METHOD__);
 
