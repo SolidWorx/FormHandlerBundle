@@ -104,6 +104,7 @@ final class FormHandler
         if ($handler instanceof FormHandlerResponseInterface) {
             $formRequest->setResponse($handler->getResponse($formRequest));
         }
+
         if (!$form->isSubmitted()) {
             return $formRequest;
         }
