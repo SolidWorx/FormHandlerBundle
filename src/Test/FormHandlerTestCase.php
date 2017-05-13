@@ -32,6 +32,10 @@ use Symfony\Component\Form\Util\ServerParams;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 abstract class FormHandlerTestCase extends TestCase
 {
@@ -43,7 +47,48 @@ abstract class FormHandlerTestCase extends TestCase
     public function testForm()
     {
         $requestStack = new RequestStack();
-        $requestStack->push(Request::create('/', 'POST', $this->getFormData()));
+        $request = Request::create('/', 'GET');
+        $request->setSession(new Session(new MockArraySessionStorage(), new AttributeBag(), new FlashBag()));
+        $requestStack->push($request);
+        $dispatcher = new EventDispatcher();
+
+        $this->factory = Forms::createFormFactoryBuilder()
+            ->addExtensions($this->getExtensions())
+            ->addTypeExtensions(
+                array_merge(
+                    $this->getTypeExtensions(),
+                    [
+                        $this->getRequestHandlerExtension($requestStack),
+                    ]
+                )
+            )
+            ->addTypes($this->getTypes())
+            ->addTypeGuessers($this->getTypeGuessers())
+            ->getFormFactory();
+
+        $formHandler = new FormHandler($requestStack, $dispatcher, $this->factory);
+
+        $handler = $this->getHandler();
+
+        if (!is_string($handler) && !$handler instanceof FormHandlerInterface) {
+            throw new \Exception(get_class($this).'::getHandler() must return a string or instance of '.FormHandlerInterface::class);
+        }
+
+        if (is_object($handler)) {
+            $formHandler->registerHandler($handler);
+        }
+
+        $response = $formHandler->handle($handler, ...$this->getHandlerOptions());
+
+        $this->assertResponse($response);
+    }
+
+    public function testFormSubmit()
+    {
+        $requestStack = new RequestStack();
+        $request = Request::create('/', 'POST', $this->getFormData());
+        $request->setSession(new Session(new MockArraySessionStorage(), new AttributeBag(), new FlashBag()));
+        $requestStack->push($request);
         $dispatcher = new EventDispatcher();
 
         $this->factory = Forms::createFormFactoryBuilder()
@@ -147,7 +192,7 @@ abstract class FormHandlerTestCase extends TestCase
     /**
      * @return array
      */
-    abstract public function getFormData(): array;
+    abstract public function getFormData();
 
     /**
      * Return options that should be passed to the handler
@@ -200,6 +245,10 @@ abstract class FormHandlerTestCase extends TestCase
      * @param mixed             $data
      */
     protected function assertOnFail(?Response $response, FormRequest $formRequest, FormErrorIterator $errors, $data = null)
+    {
+    }
+
+    protected function assertResponse(FormRequest $formRequest)
     {
     }
 

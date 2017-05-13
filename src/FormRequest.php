@@ -70,7 +70,7 @@ class FormRequest
     }
 
     /**
-     * @return Response
+     * @return mixed
      */
     public function getResponse()
     {
