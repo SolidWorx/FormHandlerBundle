@@ -5,9 +5,11 @@ sudo: false
 env:
     - COMPOSER_OPTIONS="
 
+php:
+    - 7.1
+
 matrix:
   include:
-    - php: 7.1
     - php: 7.1
       env:
         - COMPOSER_OPTIONS="--prefer-lowest"
