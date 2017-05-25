@@ -17,33 +17,41 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use SolidWorx\FormHandler\Decorator\FormCollectionDecorator;
 use SolidWorx\FormHandler\FormHandlerInterface;
+use SolidWorx\FormHandler\FormHandlerOptionsResolver;
 use SolidWorx\FormHandler\FormRequest;
+use SolidWorx\FormHandler\Options;
 use SolidWorx\FormHandler\Test\FormHandlerTestCase;
 use SolidWorx\FormHandler\Tests\Fixtures\Form\TestForm;
 use SolidWorx\FormHandler\Tests\Fixtures\Model\ChildClass;
 use SolidWorx\FormHandler\Tests\Fixtures\Model\TestClass;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormCollectionDecoratorTest extends FormHandlerTestCase
 {
     protected function getHandlerOptions(): array
     {
         return [
-            new TestClass,
+            'entity' => new TestClass,
         ];
     }
 
     public function getHandler()
     {
-        $handlerMock = new class implements FormHandlerInterface
+        $handlerMock = new class implements FormHandlerInterface, FormHandlerOptionsResolver
         {
-            public function getForm(FormFactoryInterface $factory = null, ...$options)
+            public function getForm(FormFactoryInterface $factory, Options $options)
             {
                 $class = new TestClass();
                 $class->child = [new ChildClass('value3')];
 
                 return $factory->create(TestForm::class, $class);
+            }
+
+            public function configureOptions(OptionsResolver $resolver): void
+            {
+                $resolver->setDefined('entity');
             }
         };
 

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace SolidWorx\FormHandler\Tests\Fixtures;
 
 use SolidWorx\FormHandler\FormHandlerInterface;
+use SolidWorx\FormHandler\Options;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -22,7 +23,7 @@ class TestFormHandler implements FormHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function getForm(FormFactoryInterface $factory = null, ...$options)
+    public function getForm(FormFactoryInterface $factory, Options $options)
     {
         return TextType::class;
     }

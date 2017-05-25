@@ -19,16 +19,19 @@ use SolidWorx\FormHandler\FormCollection;
 use SolidWorx\FormHandler\FormCollectionHandlerInterface;
 use SolidWorx\FormHandler\FormHandlerFailInterface;
 use SolidWorx\FormHandler\FormHandlerInterface;
+use SolidWorx\FormHandler\FormHandlerOptionsResolver;
 use SolidWorx\FormHandler\FormHandlerResponseInterface;
 use SolidWorx\FormHandler\FormHandlerSuccessInterface;
 use SolidWorx\FormHandler\FormRequest;
+use SolidWorx\FormHandler\Options;
 use SolidWorx\Util\ArrayUtil;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHandlerInterface, FormHandlerFailInterface, FormHandlerResponseInterface, FormHandlerSuccessInterface
+class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHandlerInterface, FormHandlerFailInterface, FormHandlerResponseInterface, FormHandlerSuccessInterface, FormHandlerOptionsResolver
 {
     /**
      * @var FormHandlerInterface
@@ -74,14 +77,14 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
     /**
      * {@inheritdoc}
      */
-    public function getForm(FormFactoryInterface $factory = null, ...$options)
+    public function getForm(FormFactoryInterface $factory, Options $options)
     {
-        $form = $this->handler->getForm($factory, ...$options);
+        $form = $this->handler->getForm($factory, $options);
 
         if ($form instanceof FormInterface) {
             $this->formData = FormCollection::getEntityCollections($form->getData());
         } else {
-            $entity = array_reduce($options, function ($carry, $item) {
+            $entity = array_reduce(iterator_to_array($options->getIterator()), function ($carry, $item) {
                 if (is_object($carry) && method_exists($carry, 'getId')) {
                     return $carry;
                 }
@@ -135,6 +138,16 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
         }
 
         return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        if ($this->handler instanceof FormHandlerOptionsResolver) {
+            $this->handler->configureOptions($resolver);
+        }
     }
 
     private function resolveCollections($entity): void

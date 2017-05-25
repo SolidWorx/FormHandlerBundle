@@ -52,7 +52,7 @@ A form can have a class that implements the `FormHandlerInterface` interface. Th
 
 
 ```php
-public function getForm(FormFactoryInterface $factory = null, array ...$options);
+public function getForm(FormFactoryInterface $factory, Options $options);
 ```
 
 This method can either return a standard form type, or use the factory to generate a form type.
@@ -62,10 +62,11 @@ This method can either return a standard form type, or use the factory to genera
 
 use Symfony\Component\Form\FormFactoryInterface;
 use SolidWorx\FormHandler\FormHandlerInterface;
+use SolidWorx\FormHandler\Options;
 
 class MyFormHandler implements FormHandlerInterface
 {
-    public function getForm(FormFactoryInterface $factory = null, ...$options)
+    public function getForm(FormFactoryInterface $factory, Options $options)
     {
         // either
         return MyFormType::class;
@@ -146,6 +147,62 @@ class MyFormHandler implements FormHandlerInterface, FormHandlerSuccessInterface
     {
         // $data is the submitted data from the form, do something with it here
         // This will probably save info to the DB
+    }
+}
+```
+
+## Adding options to a form
+
+If you need to pass options to a form, you can add it as an array to the second argument of `FormHandler::handle`:
+
+```php
+<?php
+
+class MyController extends Controller
+{
+    public function addAction()
+    {
+        return $this->get('solidworx.form_handler')->handle(MyFormHandler::class, ['entity' => new Blog]); // MyFormHandler will automatically be pulled from the container if it is tagges with `form.handler`
+    }
+}
+```
+
+The options will then be available in the `getForm` method as a `Options` object:
+
+```php
+<?php
+
+use Symfony\Component\Form\FormFactoryInterface;
+use SolidWorx\FormHandler\FormHandlerInterface;
+use SolidWorx\FormHandler\Options;
+
+class MyFormHandler implements FormHandlerInterface
+{
+    public function getForm(FormFactoryInterface $factory, Options $options)
+    {
+        return $factory->create(MyFormType::class, $options->get('entity'));
+    }
+}
+```
+
+You can also configure the options to set what options is allowed, set default values, define required options etc. by implementing the `FormHandlerOptionsResolver` interface:
+
+
+```php
+<?php
+
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use SolidWorx\FormHandler\FormHandlerInterface;
+use SolidWorx\FormHandler\FormHandlerOptionsResolver;
+
+class MyFormHandler implements FormHandlerInterface, FormHandlerOptionsResolver
+{
+    // ...
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired('entity');
+        $resolver->addAllowedTypes('entity', BlogEntity::class);
+        $resolver->setDefault('another_options', 'myvalue');
     }
 }
 ```
