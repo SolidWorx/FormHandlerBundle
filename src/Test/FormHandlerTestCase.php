@@ -21,6 +21,7 @@ use SolidWorx\FormHandler\FormHandlerFailInterface;
 use SolidWorx\FormHandler\FormHandlerInterface;
 use SolidWorx\FormHandler\FormHandlerSuccessInterface;
 use SolidWorx\FormHandler\FormRequest;
+use SolidWorx\FormHandler\Options;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationRequestHandler;
@@ -78,7 +79,7 @@ abstract class FormHandlerTestCase extends TestCase
             $formHandler->registerHandler($handler);
         }
 
-        $response = $formHandler->handle($handler, ...$this->getHandlerOptions());
+        $response = $formHandler->handle($handler, $this->getHandlerOptions());
 
         $this->assertResponse($response);
     }
@@ -120,7 +121,7 @@ abstract class FormHandlerTestCase extends TestCase
         $this->registerSuccessHandler($handler, $dispatcher);
         $this->registerFailHandler($handler, $dispatcher);
 
-        $formHandler->handle($handler, ...$this->getHandlerOptions());
+        $formHandler->handle($handler, $this->getHandlerOptions());
     }
 
     /**

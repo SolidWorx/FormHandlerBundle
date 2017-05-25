@@ -16,12 +16,13 @@ namespace SolidWorx\FormHandler\Tests\Fixtures;
 use SolidWorx\FormHandler\FormHandlerInterface;
 use SolidWorx\FormHandler\FormHandlerResponseInterface;
 use SolidWorx\FormHandler\FormRequest;
+use SolidWorx\FormHandler\Options;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class TestFormHandlerWithResponse implements FormHandlerInterface, FormHandlerResponseInterface
 {
-    public function getForm(FormFactoryInterface $factory = null, ...$options)
+    public function getForm(FormFactoryInterface $factory, Options $options)
     {
         /* noop */
     }

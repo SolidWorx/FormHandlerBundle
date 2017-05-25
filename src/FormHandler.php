@@ -25,6 +25,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class FormHandler
 {
@@ -93,9 +94,20 @@ final class FormHandler
      *
      * @return FormRequest
      */
-    public function handle($class, ...$options): FormRequest
+    public function handle($class, array $options = []): FormRequest
     {
+        $optionsResolver = new OptionsResolver();
+
         $handler = $this->getHandler($class);
+
+        if ($handler instanceof FormHandlerOptionsResolver) {
+            $handler->configureOptions($optionsResolver);
+
+            $options = $optionsResolver->resolve($options);
+        }
+
+        $options = Options::fromArray($options);
+
         $form = $this->getForm($handler, $options);
         $formRequest = new FormRequest($form, $this->request, new Response(), $options);
 
@@ -150,15 +162,15 @@ final class FormHandler
 
     /**
      * @param FormHandlerInterface $handler
-     * @param array                $options
+     * @param Options              $options
      *
      * @return FormInterface
      *
      * @throws \Exception
      */
-    private function getForm(FormHandlerInterface $handler, array $options): FormInterface
+    private function getForm(FormHandlerInterface $handler, Options $options): FormInterface
     {
-        $form = $handler->getForm($this->factory, ...$options);
+        $form = $handler->getForm($this->factory, $options);
 
         if (!$form instanceof FormInterface && !is_string($form)) {
             throw new \Exception(sprintf('%s::getForm() must return a string or instance of FormInterface, %s given', get_class($handler), is_object($form) ? get_class($form) : gettype($form)));

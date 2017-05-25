@@ -43,9 +43,9 @@ class FormRequest
      * @param FormInterface $form
      * @param Request       $request
      * @param Response      $response
-     * @param array         $options
+     * @param Options       $options
      */
-    public function __construct(FormInterface $form = null, Request $request = null, Response $response = null, array $options = [])
+    public function __construct(FormInterface $form = null, Request $request = null, Response $response = null, Options $options = null)
     {
         $this->form = $form;
         $this->request = $request;
@@ -102,9 +102,9 @@ class FormRequest
     }
 
     /**
-     * @return array
+     * @return Options
      */
-    public function getOptions(): array
+    public function getOptions(): Options
     {
         return $this->options;
     }
@@ -112,8 +112,8 @@ class FormRequest
     /**
      * @param array $options
      */
-    public function setOptions(array $options): void
+    public function addOptions(array $options): void
     {
-        $this->options = $options;
+        $this->options = Options::fromArray($options)->merge($this->options);
     }
 }
