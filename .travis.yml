@@ -11,7 +11,7 @@ matrix:
       env:
 	  - COMPOSER_OPTIONS="--prefer-lowest"
     - php: 7.1
-	env:
+      env:
 	  - COMPOSER_OPTIONS="--prefer-stable"
     - php: nightly
 
