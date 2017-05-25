@@ -28,7 +28,7 @@
     "require": {
         "php": ">=7.1.0",
         "symfony/framework-bundle": "^3.0",
-        "symfony/form": "^2.7 || ^3.0",
+        "symfony/form": "^3.0",
         "solidworx/util": "^0.1"
     },
     "require-dev": {
