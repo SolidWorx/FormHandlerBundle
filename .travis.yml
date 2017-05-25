@@ -10,10 +10,10 @@ matrix:
     - php: 7.1
     - php: 7.1
       env:
-	  - COMPOSER_OPTIONS="--prefer-lowest"
+        - COMPOSER_OPTIONS="--prefer-lowest"
     - php: 7.1
       env:
-	  - COMPOSER_OPTIONS="--prefer-stable"
+        - COMPOSER_OPTIONS="--prefer-stable"
     - php: nightly
   fast_finish: true
 
