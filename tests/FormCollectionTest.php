@@ -15,14 +15,17 @@ namespace SolidWorx\FormHandler\Tests;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use SolidWorx\FormHandler\FormCollection;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
+use SolidWorx\FormHandler\FormCollection;
 
 class FormCollectionTest extends TestCase
 {
     public function testGetEntityCollectionsWithEmptyObject()
     {
-        $this->assertSame([], FormCollection::getEntityCollections(null));
+        $this->assertSame([], (new FormCollection($this->getMockBuilder(ManagerRegistry::class)->getMock()))->getEntityCollections(null));
     }
 
     public function testGetEntityCollections()
@@ -36,7 +39,7 @@ class FormCollectionTest extends TestCase
                 'collection' => [
                     new Bar(12),
                     new Bar(13),
-                ]
+                ],
             ],
             [
                 'class' => 'SolidWorx\FormHandler\Tests\Bar',
@@ -46,7 +49,7 @@ class FormCollectionTest extends TestCase
                 'collection' => [
                     new Baz(),
                     new Baz(),
-                ]
+                ],
             ],
             [
                 'class' => 'SolidWorx\FormHandler\Tests\Bar',
@@ -56,11 +59,45 @@ class FormCollectionTest extends TestCase
                 'collection' => [
                     new Baz(),
                     new Baz(),
-                ]
-            ]
+                ],
+            ],
         ];
 
-        $this->assertEquals($results, FormCollection::getEntityCollections(new Foo(4)));
+        $foo = new Foo(4);
+
+        $metadata = $this->getMockBuilder(ClassMetadata::class)->getMock();
+        $objectManager = $this->getMockBuilder(ObjectManager::class)->getMock();
+        $registry = $this->getMockBuilder(ManagerRegistry::class)->getMock();
+
+        $registry->expects($this->any())
+            ->method('getManagerForClass')
+            //->with(Foo::class)
+            ->willReturn($objectManager);
+
+        $objectManager->expects($this->any())
+            ->method('getClassMetadata')
+            //->with(Foo::class)
+            ->willReturn($metadata);
+
+        $metadata->expects($this->any())
+            ->method('getIdentifier')
+            //->with(Foo::class)
+            ->willReturn(['id']);
+
+        $metadata->expects($this->at(0))
+            ->method('getIdentifierValues')
+            ->with($foo)
+            ->willReturn(['id' => 4]);
+
+        $metadata->expects($this->at(2))
+            ->method('getIdentifierValues')
+            ->willReturn(['id' => 12]);
+
+        $metadata->expects($this->at(4))
+            ->method('getIdentifierValues')
+            ->willReturn(['id' => 13]);
+
+        $this->assertEquals($results, (new FormCollection($registry))->getEntityCollections($foo));
     }
 }
 
@@ -106,5 +143,4 @@ class Bar
 
 class Baz
 {
-
 }
