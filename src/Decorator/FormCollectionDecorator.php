@@ -81,22 +81,27 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
     {
         $form = $this->handler->getForm($factory, $options);
 
+        $class = get_class($form->getData());
+        $objectManager = $this->registry->getManagerForClass($class);
+
+        $formCollection = new FormCollection($this->registry);
+
         if ($form instanceof FormInterface) {
-            $this->formData = FormCollection::getEntityCollections($form->getData());
+            $this->formData = $formCollection->getEntityCollections($form->getData());
         } else {
-            $entity = array_reduce(iterator_to_array($options->getIterator()), function ($carry, $item) {
-                if (is_object($carry) && method_exists($carry, 'getId')) {
+            $entity = array_reduce(iterator_to_array($options->getIterator()), function ($carry, $item) use ($formCollection) {
+                if (is_object($carry) && null !== $formCollection->getEntityIdentifier($carry)) {
                     return $carry;
                 }
 
-                if (is_object($item) && method_exists($item, 'getId')) {
+                if (is_object($item) && null !== $formCollection->getEntityIdentifier($item)) {
                     return $item;
                 }
 
                 return null;
             });
 
-            $this->formData = FormCollection::getEntityCollections($entity);
+            $this->formData = $formCollection->getEntityCollections($entity);
         }
 
         return $form;

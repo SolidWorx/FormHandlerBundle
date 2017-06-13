@@ -15,6 +15,8 @@ namespace SolidWorx\FormHandler\Tests\Decorator;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\ObjectManager;
 use SolidWorx\FormHandler\Decorator\FormCollectionDecorator;
 use SolidWorx\FormHandler\FormHandlerInterface;
 use SolidWorx\FormHandler\FormHandlerOptionsResolver;
@@ -55,9 +57,23 @@ class FormCollectionDecoratorTest extends FormHandlerTestCase
             }
         };
 
+        $metadata = $this->getMockBuilder(ClassMetadata::class)->getMock();
+        $objectManager = $this->getMockBuilder(ObjectManager::class)->getMock();
+        $registry = $this->getMockBuilder(ManagerRegistry::class)->getMock();
+
+        $registry->expects($this->atLeastOnce())
+            ->method('getManagerForClass')
+            ->with(TestClass::class)
+            ->willReturn($objectManager);
+
+        $objectManager->expects($this->once())
+            ->method('getClassMetadata')
+            ->with(TestClass::class)
+            ->willReturn($metadata);
+
         return new FormCollectionDecorator(
             $handlerMock,
-            $this->getMockBuilder(ManagerRegistry::class)->getMock()
+            $registry
         );
     }
 
