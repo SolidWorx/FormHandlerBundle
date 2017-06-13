@@ -81,9 +81,6 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
     {
         $form = $this->handler->getForm($factory, $options);
 
-        $class = get_class($form->getData());
-        $objectManager = $this->registry->getManagerForClass($class);
-
         $formCollection = new FormCollection($this->registry);
 
         if ($form instanceof FormInterface) {
