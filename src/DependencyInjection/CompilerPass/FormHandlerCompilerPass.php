@@ -70,4 +70,3 @@ class FormHandlerCompilerPass implements CompilerPassInterface
         }
     }
 }
-
