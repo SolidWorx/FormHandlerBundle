@@ -24,7 +24,6 @@ use SolidWorx\FormHandler\FormHandlerResponseInterface;
 use SolidWorx\FormHandler\FormHandlerSuccessInterface;
 use SolidWorx\FormHandler\FormRequest;
 use SolidWorx\FormHandler\Options;
-use SolidWorx\Util\ArrayUtil;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -94,8 +93,6 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
                 if (is_object($item) && null !== $formCollection->getEntityIdentifier($item)) {
                     return $item;
                 }
-
-                return null;
             });
 
             $this->formData = $formCollection->getEntityCollections($entity);
@@ -124,8 +121,6 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
         if ($this->handler instanceof FormHandlerResponseInterface) {
             return $this->handler->getResponse($formRequest);
         }
-
-        return null;
     }
 
     /**
@@ -172,7 +167,7 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
             } else {
                 $toDel = array_filter($data['collection'], function ($object) use ($values) {
                     try {
-                        return !in_array($object->getId(), ArrayUtil::column($values, 'id'));
+                        return !in_array($object->getId(), \_\map($values, 'id'));
                     } catch (\ErrorException $e) {
                         return false;
                     }

@@ -44,9 +44,9 @@ class FormHandlerCompilerPass implements CompilerPassInterface
      * @param ContainerBuilder $container
      * @param string           $serviceId
      *
-     * @return string
-     *
      * @throws \Exception
+     *
+     * @return string
      */
     private function decorate(ContainerBuilder $container, string $serviceId)
     {

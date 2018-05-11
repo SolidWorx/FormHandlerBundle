@@ -139,9 +139,9 @@ final class FormHandler
     /**
      * @param string|FormHandlerInterface $handler
      *
-     * @return FormHandlerInterface
-     *
      * @throws InvalidHandlerException
+     *
+     * @return FormHandlerInterface
      */
     private function getHandler($handler): FormHandlerInterface
     {
@@ -164,9 +164,9 @@ final class FormHandler
      * @param FormHandlerInterface $handler
      * @param Options              $options
      *
-     * @return FormInterface
-     *
      * @throws \Exception
+     *
+     * @return FormInterface
      */
     private function getForm(FormHandlerInterface $handler, Options $options): FormInterface
     {
