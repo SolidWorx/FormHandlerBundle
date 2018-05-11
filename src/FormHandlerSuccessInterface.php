@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 interface FormHandlerSuccessInterface
 {
     /**
-     * Handle successful form submits
+     * Handle successful form submits.
      *
      * @param mixed       $data The data that is returned from the form
      * @param FormRequest $form

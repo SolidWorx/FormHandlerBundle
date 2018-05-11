@@ -18,7 +18,7 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Get a options, providing a default if the value doesn't exist
+     * Get a options, providing a default if the value doesn't exist.
      *
      * @param string $key
      * @param null   $default
@@ -39,7 +39,7 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @return Options
      */
-    public static function fromArray(array $options): Options
+    public static function fromArray(array $options): self
     {
         return new self($options);
     }

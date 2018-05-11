@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 interface FormHandlerResponseInterface
 {
     /**
-     * Return the default response for a form (E.G rendering a template)
+     * Return the default response for a form (E.G rendering a template).
      *
      * @param FormRequest $formRequest
      *

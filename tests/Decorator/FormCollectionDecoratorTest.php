@@ -35,14 +35,13 @@ class FormCollectionDecoratorTest extends FormHandlerTestCase
     protected function getHandlerOptions(): array
     {
         return [
-            'entity' => new TestClass,
+            'entity' => new TestClass(),
         ];
     }
 
     public function getHandler()
     {
-        $handlerMock = new class implements FormHandlerInterface, FormHandlerOptionsResolver
-        {
+        $handlerMock = new class() implements FormHandlerInterface, FormHandlerOptionsResolver {
             public function getForm(FormFactoryInterface $factory, Options $options)
             {
                 $class = new TestClass();
@@ -81,8 +80,8 @@ class FormCollectionDecoratorTest extends FormHandlerTestCase
     {
         $result = new TestClass(
             new ArrayCollection([
-                new ChildClass("value1"),
-                new ChildClass("value2"),
+                new ChildClass('value1'),
+                new ChildClass('value2'),
             ])
         );
 

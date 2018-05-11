@@ -32,30 +32,30 @@ class FormCollectionTest extends TestCase
     {
         $results = [
             [
-                'class' => 'SolidWorx\FormHandler\Tests\Foo',
+                'class'      => 'SolidWorx\FormHandler\Tests\Foo',
                 'short_name' => 'Foo',
-                'id' => 4,
-                'method' => 'getBars',
+                'id'         => 4,
+                'method'     => 'getBars',
                 'collection' => [
                     new Bar(12),
                     new Bar(13),
                 ],
             ],
             [
-                'class' => 'SolidWorx\FormHandler\Tests\Bar',
+                'class'      => 'SolidWorx\FormHandler\Tests\Bar',
                 'short_name' => 'Bar',
-                'id' => 12,
-                'method' => 'getBaz',
+                'id'         => 12,
+                'method'     => 'getBaz',
                 'collection' => [
                     new Baz(),
                     new Baz(),
                 ],
             ],
             [
-                'class' => 'SolidWorx\FormHandler\Tests\Bar',
+                'class'      => 'SolidWorx\FormHandler\Tests\Bar',
                 'short_name' => 'Bar',
-                'id' => 13,
-                'method' => 'getBaz',
+                'id'         => 13,
+                'method'     => 'getBaz',
                 'collection' => [
                     new Baz(),
                     new Baz(),

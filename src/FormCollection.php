@@ -63,10 +63,10 @@ class FormCollection
             }
 
             $data[] = [
-                'class' => $ref->getName(),
+                'class'      => $ref->getName(),
                 'short_name' => $ref->getShortName(),
-                'id' => $this->getEntityIdentifierValue($entity),
-                'method' => $method->getShortName(),
+                'id'         => $this->getEntityIdentifierValue($entity),
+                'method'     => $method->getShortName(),
                 'collection' => $collection->toArray(),
             ];
 
@@ -88,7 +88,7 @@ class FormCollection
         $identifierValue = $this->getEntityMetadata($entity)->getIdentifierValues($entity);
 
         if (empty($identifierValue)) {
-            return null;
+            return;
         }
 
         return $identifierValue[$this->getEntityIdentifier($entity)] ?? null;

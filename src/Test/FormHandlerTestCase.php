@@ -196,7 +196,7 @@ abstract class FormHandlerTestCase extends TestCase
     abstract public function getFormData();
 
     /**
-     * Return options that should be passed to the handler
+     * Return options that should be passed to the handler.
      *
      * @return array
      */
@@ -227,7 +227,7 @@ abstract class FormHandlerTestCase extends TestCase
     }
 
     /**
-     * Get the response from the success handler and run any assertions needed
+     * Get the response from the success handler and run any assertions needed.
      *
      * @param mixed       $response The result returned from the success handler
      * @param mixed       $data
@@ -238,9 +238,9 @@ abstract class FormHandlerTestCase extends TestCase
     }
 
     /**
-     * Get the response from the fail handler and run any assertions needed
+     * Get the response from the fail handler and run any assertions needed.
      *
-     * @param mixed             $response The result returned from the fail handler
+     * @param mixed             $response    The result returned from the fail handler
      * @param FormRequest       $formRequest
      * @param FormErrorIterator $errors
      * @param mixed             $data
@@ -254,7 +254,7 @@ abstract class FormHandlerTestCase extends TestCase
     }
 
     /**
-     * Register custom form extensions
+     * Register custom form extensions.
      *
      * @return array
      */
@@ -264,7 +264,7 @@ abstract class FormHandlerTestCase extends TestCase
     }
 
     /**
-     * Register custom form type extensions
+     * Register custom form type extensions.
      *
      * @return array
      */
@@ -274,7 +274,7 @@ abstract class FormHandlerTestCase extends TestCase
     }
 
     /**
-     * Register custom form types
+     * Register custom form types.
      *
      * @return array
      */
@@ -284,7 +284,7 @@ abstract class FormHandlerTestCase extends TestCase
     }
 
     /**
-     * Register custom form type guessers
+     * Register custom form type guessers.
      *
      * @return array
      */

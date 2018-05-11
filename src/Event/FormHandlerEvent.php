@@ -17,7 +17,6 @@ use SolidWorx\FormHandler\FormHandlerInterface;
 use SolidWorx\FormHandler\FormRequest;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class FormHandlerEvent extends Event
 {

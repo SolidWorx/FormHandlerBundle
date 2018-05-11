@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 interface FormHandlerOptionsResolver
 {
     /**
-     * Configure defined, required and default options
+     * Configure defined, required and default options.
      *
      * @param OptionsResolver $resolver
      */
