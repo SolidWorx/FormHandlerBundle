@@ -93,8 +93,6 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
                 if (is_object($item) && null !== $formCollection->getEntityIdentifier($item)) {
                     return $item;
                 }
-
-                return null;
             });
 
             $this->formData = $formCollection->getEntityCollections($entity);
@@ -123,8 +121,6 @@ class FormCollectionDecorator implements FormHandlerInterface, FormCollectionHan
         if ($this->handler instanceof FormHandlerResponseInterface) {
             return $this->handler->getResponse($formRequest);
         }
-
-        return null;
     }
 
     /**
