@@ -5,9 +5,6 @@ sudo: false
 env:
     - COMPOSER_OPTIONS="
 
-php:
-    - 7.1
-
 matrix:
   fast_finish: true
   include:
@@ -18,9 +15,12 @@ matrix:
     - php: 7.2
       env:
         - COMPOSER_OPTIONS="--prefer-stable"
+    - php: 7.3
+    - php: 7.4snapshot
     - php: nightly
   allow_failures:
     - php: nightly
+    - php: 7.4snapshot
 
 cache:
   directories:
