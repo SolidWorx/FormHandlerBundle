@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the FormHandler package.
  *
  * (c) SolidWorx <open-source@solidworx.co>
@@ -126,7 +126,6 @@ abstract class FormHandlerTestCase extends TestCase
 
     /**
      * @param string|FormHandlerInterface|FormHandlerSuccessInterface $handler
-     * @param EventDispatcherInterface                                $dispatcher
      *
      * @throws \Exception
      */
@@ -151,7 +150,6 @@ abstract class FormHandlerTestCase extends TestCase
 
     /**
      * @param string|FormHandlerInterface|FormHandlerFailInterface $handler
-     * @param EventDispatcherInterface                             $dispatcher
      *
      * @throws \Exception
      */
@@ -175,11 +173,6 @@ abstract class FormHandlerTestCase extends TestCase
         });
     }
 
-    /**
-     * @param RequestStack $requestStack
-     *
-     * @return FormTypeHttpFoundationExtension
-     */
     private function getRequestHandlerExtension(RequestStack $requestStack): FormTypeHttpFoundationExtension
     {
         return new FormTypeHttpFoundationExtension(new HttpFoundationRequestHandler(new ServerParams($requestStack)));
@@ -197,8 +190,6 @@ abstract class FormHandlerTestCase extends TestCase
 
     /**
      * Return options that should be passed to the handler.
-     *
-     * @return array
      */
     protected function getHandlerOptions(): array
     {
@@ -207,9 +198,6 @@ abstract class FormHandlerTestCase extends TestCase
 
     /**
      * This method should be used to set up any mocks or objects that will be needed by the success handler.
-     *
-     * @param mixed       $data
-     * @param FormRequest $form
      */
     protected function beforeSuccess($data, FormRequest $form)
     {
@@ -217,10 +205,6 @@ abstract class FormHandlerTestCase extends TestCase
 
     /**
      * This method should be used to set up any mocks or objects that will be needed by the fail handler.
-     *
-     * @param FormRequest       $formRequest
-     * @param FormErrorIterator $errors
-     * @param mixed             $data
      */
     protected function beforeFail(FormRequest $formRequest, FormErrorIterator $errors, $data = null)
     {
@@ -229,9 +213,7 @@ abstract class FormHandlerTestCase extends TestCase
     /**
      * Get the response from the success handler and run any assertions needed.
      *
-     * @param mixed       $response The result returned from the success handler
-     * @param mixed       $data
-     * @param FormRequest $form
+     * @param mixed $response The result returned from the success handler
      */
     protected function assertOnSuccess(?Response $response, $data, FormRequest $form)
     {
@@ -240,10 +222,7 @@ abstract class FormHandlerTestCase extends TestCase
     /**
      * Get the response from the fail handler and run any assertions needed.
      *
-     * @param mixed             $response    The result returned from the fail handler
-     * @param FormRequest       $formRequest
-     * @param FormErrorIterator $errors
-     * @param mixed             $data
+     * @param mixed $response The result returned from the fail handler
      */
     protected function assertOnFail(?Response $response, FormRequest $formRequest, FormErrorIterator $errors, $data = null)
     {
@@ -255,8 +234,6 @@ abstract class FormHandlerTestCase extends TestCase
 
     /**
      * Register custom form extensions.
-     *
-     * @return array
      */
     protected function getExtensions(): array
     {
@@ -265,8 +242,6 @@ abstract class FormHandlerTestCase extends TestCase
 
     /**
      * Register custom form type extensions.
-     *
-     * @return array
      */
     protected function getTypeExtensions(): array
     {
@@ -275,8 +250,6 @@ abstract class FormHandlerTestCase extends TestCase
 
     /**
      * Register custom form types.
-     *
-     * @return array
      */
     protected function getTypes(): array
     {
@@ -285,8 +258,6 @@ abstract class FormHandlerTestCase extends TestCase
 
     /**
      * Register custom form type guessers.
-     *
-     * @return array
      */
     protected function getTypeGuessers(): array
     {

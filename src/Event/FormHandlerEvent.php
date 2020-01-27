@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the FormHandler package.
  *
  * (c) SolidWorx <open-source@solidworx.co>
@@ -60,9 +60,6 @@ class FormHandlerEvent extends Event
         return $this->form;
     }
 
-    /**
-     * @param FormInterface $form
-     */
     public function setForm(FormInterface $form): void
     {
         $this->form = $form;
@@ -76,25 +73,16 @@ class FormHandlerEvent extends Event
         return $this->handler;
     }
 
-    /**
-     * @param FormHandlerInterface $handler
-     */
     public function setHandler(FormHandlerInterface $handler): void
     {
         $this->handler = $handler;
     }
 
-    /**
-     * @param mixed $response
-     */
     public function setResponse($response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * @return mixed
-     */
     public function getResponse()
     {
         return $this->response;
@@ -108,9 +96,6 @@ class FormHandlerEvent extends Event
         return $this->formRequest;
     }
 
-    /**
-     * @param FormRequest $formRequest
-     */
     public function setFormRequest(FormRequest $formRequest): void
     {
         $this->formRequest = $formRequest;

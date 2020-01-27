@@ -1,9 +1,14 @@
 <?php
+
+declare(strict_types=1);
+
 /**
- * This file is part of the FormHandlerBundle project.
+ * This file is part of the FormHandler package.
  *
- * @author     pierre
- * @copyright  Copyright (c) 2017
+ * (c) SolidWorx <open-source@solidworx.co>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace SolidWorx\FormHandler;
@@ -20,8 +25,7 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Get a options, providing a default if the value doesn't exist.
      *
-     * @param string $key
-     * @param null   $default
+     * @param null $default
      *
      * @return mixed|null
      */
@@ -35,8 +39,6 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param array $options
-     *
      * @return Options
      */
     public static function fromArray(array $options): self
@@ -93,8 +95,6 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param array $options
-     *
      * @return Options
      */
     public function merge(array $options)

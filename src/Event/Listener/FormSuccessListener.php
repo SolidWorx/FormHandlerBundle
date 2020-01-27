@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the FormHandler package.
  *
  * (c) SolidWorx <open-source@solidworx.co>
@@ -18,6 +18,7 @@ use SolidWorx\FormHandler\Event\FormHandlerEvents;
 use SolidWorx\FormHandler\FormHandlerResponseInterface;
 use SolidWorx\FormHandler\FormHandlerSuccessInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -28,9 +29,6 @@ class FormSuccessListener implements EventSubscriberInterface
      */
     private $session;
 
-    /**
-     * @param Session $session
-     */
     public function __construct(Session $session) // Don't type-hint against SessionInterface, as the interface doesn't have the getFlashBag method
     {
         $this->session = $session;
@@ -46,9 +44,6 @@ class FormSuccessListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormHandlerEvent $event
-     */
     public function onFormSuccess(FormHandlerEvent $event): void
     {
         $handler = $event->getHandler();
@@ -58,7 +53,12 @@ class FormSuccessListener implements EventSubscriberInterface
         }
 
         try {
-            $response = $handler->onSuccess($event->getForm()->getData(), $event->getFormRequest());
+            $form = $event->getForm();
+            if (!$form instanceof FormInterface) {
+                return;
+            }
+
+            $response = $handler->onSuccess($form->getData(), $event->getFormRequest());
 
             if ($response instanceof Response) {
                 $event->setResponse($response);

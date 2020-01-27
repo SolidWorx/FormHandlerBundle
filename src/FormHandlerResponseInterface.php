@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the FormHandler package.
  *
  * (c) SolidWorx <open-source@solidworx.co>
@@ -19,10 +19,6 @@ interface FormHandlerResponseInterface
 {
     /**
      * Return the default response for a form (E.G rendering a template).
-     *
-     * @param FormRequest $formRequest
-     *
-     * @return mixed
      */
     public function getResponse(FormRequest $formRequest);
 }

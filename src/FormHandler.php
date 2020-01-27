@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the FormHandler package.
  *
  * (c) SolidWorx <open-source@solidworx.co>
@@ -48,11 +48,6 @@ final class FormHandler
      */
     private $handlers = [];
 
-    /**
-     * @param RequestStack             $requestStack
-     * @param EventDispatcherInterface $dispatcher
-     * @param FormFactoryInterface     $factory
-     */
     public function __construct(RequestStack $requestStack, EventDispatcherInterface $dispatcher, FormFactoryInterface $factory)
     {
         $this->request = $requestStack->getCurrentRequest();
@@ -61,8 +56,6 @@ final class FormHandler
     }
 
     /**
-     * @param FormHandlerInterface $handler
-     *
      * @throws NonUniqueHandlerException
      */
     public function registerHandler(FormHandlerInterface $handler): void
@@ -84,7 +77,6 @@ final class FormHandler
      * @param string|FormHandlerInterface $class
      * @param array<mixed>                $options
      *
-     * @return FormRequest
      * @throws \Exception
      */
     public function handle($class, array $options = []): FormRequest
@@ -124,7 +116,7 @@ final class FormHandler
 
         if ($response = $event->getResponse()) {
             $formRequest->setResponse($response);
-        } else if ($handler instanceof FormHandlerResponseInterface) {
+        } elseif ($handler instanceof FormHandlerResponseInterface) {
             $formRequest->setResponse($handler->getResponse($formRequest));
         }
 
@@ -135,8 +127,6 @@ final class FormHandler
      * @param string|FormHandlerInterface $handler
      *
      * @throws InvalidHandlerException
-     *
-     * @return FormHandlerInterface
      */
     private function getHandler($handler): FormHandlerInterface
     {
@@ -156,12 +146,7 @@ final class FormHandler
     }
 
     /**
-     * @param FormHandlerInterface $handler
-     * @param Options              $options
-     *
      * @throws \Exception
-     *
-     * @return FormInterface
      */
     private function getForm(FormHandlerInterface $handler, Options $options): FormInterface
     {

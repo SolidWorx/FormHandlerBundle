@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the FormHandler package.
  *
  * (c) SolidWorx <open-source@solidworx.co>
@@ -18,12 +18,5 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface FormHandlerFailInterface
 {
-    /**
-     * @param FormRequest       $formRequest
-     * @param FormErrorIterator $errors
-     * @param mixed             $data
-     *
-     * @return Response|null
-     */
     public function onFail(FormRequest $formRequest, FormErrorIterator $errors, $data = null): ?Response;
 }

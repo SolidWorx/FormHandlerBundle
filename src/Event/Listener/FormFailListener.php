@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the FormHandler package.
  *
  * (c) SolidWorx <open-source@solidworx.co>
@@ -17,6 +17,7 @@ use SolidWorx\FormHandler\Event\FormHandlerEvent;
 use SolidWorx\FormHandler\Event\FormHandlerEvents;
 use SolidWorx\FormHandler\FormHandlerFailInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class FormFailListener implements EventSubscriberInterface
@@ -31,9 +32,6 @@ class FormFailListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormHandlerEvent $event
-     */
     public function onFormFail(FormHandlerEvent $event): void
     {
         $handler = $event->getHandler();
@@ -43,6 +41,10 @@ class FormFailListener implements EventSubscriberInterface
         }
 
         $form = $event->getForm();
+
+        if (!$form instanceof FormInterface) {
+            return;
+        }
 
         $response = $handler->onFail($event->getFormRequest(), $form->getErrors(true, false), $form->getData());
 

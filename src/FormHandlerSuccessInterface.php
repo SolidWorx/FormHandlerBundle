@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the FormHandler package.
  *
  * (c) SolidWorx <open-source@solidworx.co>
@@ -20,10 +20,7 @@ interface FormHandlerSuccessInterface
     /**
      * Handle successful form submits.
      *
-     * @param mixed       $data The data that is returned from the form
-     * @param FormRequest $form
-     *
-     * @return null|Response
+     * @param mixed $data The data that is returned from the form
      */
     public function onSuccess($data, FormRequest $form): ?Response;
 }

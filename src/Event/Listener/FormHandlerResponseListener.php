@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of the FormHandler package.
  *
  * (c) SolidWorx <open-source@solidworx.co>
@@ -32,8 +32,6 @@ class FormHandlerResponseListener implements EventSubscriberInterface
     }
 
     /**
-     * @param GetResponseForControllerResultEvent $event
-     *
      * @throws \Exception
      */
     public function onKernelView(GetResponseForControllerResultEvent $event): void
