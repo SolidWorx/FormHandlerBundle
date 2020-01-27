@@ -33,4 +33,4 @@ install:
   - composer update -n "$COMPOSER_OPTIONS"
 
 script:
-    - vendor/bin/phpunit
+    - vendor/bin/simple-phpunit
