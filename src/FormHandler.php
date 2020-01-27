@@ -90,9 +90,10 @@ final class FormHandler
 
     /**
      * @param string|FormHandlerInterface $class
-     * @param mixed[]                     $options
+     * @param array<mixed>                $options
      *
      * @return FormRequest
+     * @throws \Exception
      */
     public function handle($class, array $options = []): FormRequest
     {
@@ -113,11 +114,11 @@ final class FormHandler
 
         $form->handleRequest($this->request);
 
-        if ($handler instanceof FormHandlerResponseInterface) {
-            $formRequest->setResponse($handler->getResponse($formRequest));
-        }
-
         if (!$form->isSubmitted()) {
+            if ($handler instanceof FormHandlerResponseInterface) {
+                $formRequest->setResponse($handler->getResponse($formRequest));
+            }
+
             return $formRequest;
         }
 
@@ -131,6 +132,8 @@ final class FormHandler
 
         if ($response = $event->getResponse()) {
             $formRequest->setResponse($response);
+        } else if ($handler instanceof FormHandlerResponseInterface) {
+            $formRequest->setResponse($handler->getResponse($formRequest));
         }
 
         return $formRequest;
