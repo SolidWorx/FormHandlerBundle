@@ -19,11 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 interface FormHandlerFailInterface
 {
     /**
-     * @param FormRequest       $formRequest
-     * @param FormErrorIterator $errors
-     * @param null|mixed        $data
-     *
-     * @return Response|null
+     * @param mixed|null $data
      */
     public function onFail(FormRequest $formRequest, FormErrorIterator $errors, $data = null): ?Response;
 }

@@ -20,17 +20,17 @@ use Symfony\Component\HttpFoundation\Response;
 class FormRequest
 {
     /**
-     * @var null|Request
+     * @var Request|null
      */
     private $request;
 
     /**
-     * @var null|mixed
+     * @var mixed|null
      */
     private $response;
 
     /**
-     * @var null|FormInterface<FormInterface>
+     * @var FormInterface<FormInterface>|null
      */
     private $form;
 
@@ -40,10 +40,7 @@ class FormRequest
     private $options;
 
     /**
-     * @param null|FormInterface<FormInterface> $form
-     * @param null|Request                      $request
-     * @param null|Response                     $response
-     * @param null|Options                      $options
+     * @param FormInterface<FormInterface>|null $form
      */
     public function __construct(FormInterface $form = null, Request $request = null, Response $response = null, Options $options = null)
     {

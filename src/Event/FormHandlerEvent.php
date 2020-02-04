@@ -21,12 +21,12 @@ use Symfony\Component\Form\FormInterface;
 class FormHandlerEvent extends Event
 {
     /**
-     * @var null|FormInterface
+     * @var FormInterface|null
      */
     private $form;
 
     /**
-     * @var null|FormHandlerInterface
+     * @var FormHandlerInterface|null
      */
     private $handler;
 
@@ -40,11 +40,6 @@ class FormHandlerEvent extends Event
      */
     private $formRequest;
 
-    /**
-     * @param null|FormHandlerInterface $handler
-     * @param null|FormInterface        $form
-     * @param null|FormRequest          $formRequest
-     */
     public function __construct(FormHandlerInterface $handler = null, FormInterface $form = null, FormRequest $formRequest = null)
     {
         $this->handler = $handler;

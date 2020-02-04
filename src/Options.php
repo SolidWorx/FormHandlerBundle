@@ -38,7 +38,7 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param null $default
      *
-     * @return null|mixed
+     * @return mixed|null
      */
     public function get(string $key, $default = null)
     {
@@ -73,6 +73,7 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
      * {@inheritdoc}
      *
      * @param string $offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -84,7 +85,7 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
      * {@inheritdoc}
      *
      * @param string $offset
-     * @param mixed $offset
+     * @param mixed  $offset
      */
     public function offsetSet($offset, $value): void
     {
@@ -122,7 +123,7 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @return Options<string, mixed>
      */
-    public function merge(array $options): Options
+    public function merge(array $options): self
     {
         return new self(array_merge_recursive($options, $this->options));
     }

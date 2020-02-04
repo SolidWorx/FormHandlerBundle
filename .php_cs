@@ -40,7 +40,6 @@ return PhpCsFixer\Config::create()
         'phpdoc_summary' => false,
         'declare_strict_types' => true,
         'strict_param' => true,
-        'no_superfluous_phpdoc_tags' => true,
         'ordered_imports' => true,
         'header_comment' => [
             'comment_type' => 'PHPDoc',

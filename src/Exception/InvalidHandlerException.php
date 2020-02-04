@@ -16,8 +16,7 @@ namespace SolidWorx\FormHandler\Exception;
 class InvalidHandlerException extends \LogicException
 {
     /**
-     * @param string $expected
-     * @param mixed  $actual
+     * @param mixed $actual
      */
     public function __construct(string $expected, $actual)
     {

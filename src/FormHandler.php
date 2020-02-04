@@ -29,7 +29,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class FormHandler
 {
     /**
-     * @var null|Request
+     * @var Request|null
      */
     private $request;
 
@@ -146,11 +146,11 @@ final class FormHandler
     }
 
     /**
-     * @param FormHandlerInterface   $handler
      * @param Options<string, mixed> $options
      *
-     * @return FormInterface<FormInterface>
      * @throws \Exception
+     *
+     * @return FormInterface<FormInterface>
      */
     private function getForm(FormHandlerInterface $handler, Options $options): FormInterface
     {

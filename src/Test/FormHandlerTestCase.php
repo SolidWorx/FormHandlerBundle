@@ -130,8 +130,6 @@ abstract class FormHandlerTestCase extends TestCase
     }
 
     /**
-     * @param FormHandlerSuccessInterface $handler
-     *
      * @throws \Exception
      */
     private function registerSuccessHandler(FormHandlerSuccessInterface $handler, EventDispatcherInterface $dispatcher): void
@@ -145,6 +143,7 @@ abstract class FormHandlerTestCase extends TestCase
 
             if (!$form instanceof FormInterface) {
                 $this->fail(sprintf('Event %s does not return an instance of %s', FormHandlerEvents::EVENT_FORM_SUCCESS, FormInterface::class));
+
                 return;
             }
 
@@ -159,8 +158,6 @@ abstract class FormHandlerTestCase extends TestCase
     }
 
     /**
-     * @param FormHandlerFailInterface $handler
-     *
      * @throws \Exception
      */
     private function registerFailHandler(FormHandlerFailInterface $handler, EventDispatcherInterface $dispatcher): void
@@ -174,6 +171,7 @@ abstract class FormHandlerTestCase extends TestCase
 
             if (!$form instanceof FormInterface) {
                 $this->fail(sprintf('Event %s does not return an instance of %s', FormHandlerEvents::EVENT_FORM_SUCCESS, FormInterface::class));
+
                 return;
             }
 
@@ -198,9 +196,6 @@ abstract class FormHandlerTestCase extends TestCase
      */
     abstract public function getHandler();
 
-    /**
-     * @return array
-     */
     abstract public function getFormData(): array;
 
     /**
@@ -214,8 +209,7 @@ abstract class FormHandlerTestCase extends TestCase
     /**
      * This method should be used to set up any mocks or objects that will be needed by the success handler.
      *
-     * @param FormRequest $form
-     * @param mixed       $data
+     * @param mixed $data
      */
     protected function beforeSuccess(FormRequest $form, $data): void
     {
@@ -224,9 +218,7 @@ abstract class FormHandlerTestCase extends TestCase
     /**
      * This method should be used to set up any mocks or objects that will be needed by the fail handler.
      *
-     * @param FormRequest       $formRequest
-     * @param FormErrorIterator $errors
-     * @param mixed             $data
+     * @param mixed $data
      */
     protected function beforeFail(FormRequest $formRequest, FormErrorIterator $errors, $data): void
     {
@@ -235,8 +227,7 @@ abstract class FormHandlerTestCase extends TestCase
     /**
      * Get the response from the success handler and run any assertions needed.
      *
-     * @param null|Response $response The result returned from the success handler
-     * @param FormRequest   $form
+     * @param Response|null $response The result returned from the success handler
      * @param mixed         $data
      */
     protected function assertOnSuccess(?Response $response, FormRequest $form, $data): void
@@ -246,10 +237,8 @@ abstract class FormHandlerTestCase extends TestCase
     /**
      * Get the response from the fail handler and run any assertions needed.
      *
-     * @param null|Response     $response The result returned from the fail handler
-     * @param FormRequest       $formRequest
-     * @param FormErrorIterator $errors
-     * @param mixed             $data
+     * @param Response|null $response The result returned from the fail handler
+     * @param mixed         $data
      */
     protected function assertOnFail(?Response $response, FormRequest $formRequest, $data, FormErrorIterator $errors): void
     {
