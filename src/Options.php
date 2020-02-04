@@ -13,10 +13,21 @@ declare(strict_types=1);
 
 namespace SolidWorx\FormHandler;
 
+/**
+ * @implements \ArrayAccess<string, mixed>
+ * @implements \IteratorAggregate<string, mixed>
+ * @implements \IteratorAggregate<string, mixed>
+ */
 class Options implements \ArrayAccess, \Countable, \IteratorAggregate
 {
+    /**
+     * @var array<string, mixed>
+     */
     private $options = [];
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function __construct(array $options)
     {
         $this->options = $options;
@@ -27,7 +38,7 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param null $default
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     public function get(string $key, $default = null)
     {
@@ -39,7 +50,9 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return Options
+     * @param array<string, mixed> $options
+     *
+     * @return Options<string, mixed>
      */
     public static function fromArray(array $options): self
     {
@@ -48,14 +61,19 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $offset
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->options);
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $offset
+     * @return mixed
      */
     public function offsetGet($offset)
     {
@@ -64,8 +82,21 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $offset
+     * @param mixed $offset
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
+    {
+        throw new \LogicException(__CLASS__." is immutable, you can't change it's values");
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param string $offset
+     */
+    public function offsetUnset($offset): void
     {
         throw new \LogicException(__CLASS__." is immutable, you can't change it's values");
     }
@@ -73,21 +104,13 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
-    {
-        throw new \LogicException(__CLASS__." is immutable, you can't change it's values");
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
         return count($this->options);
     }
 
     /**
-     * {@inheritdoc}
+     * @return \ArrayIterator<string, mixed>
      */
     public function getIterator(): \ArrayIterator
     {
@@ -95,10 +118,20 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return Options
+     * @param array<string, mixed> $options
+     *
+     * @return Options<string, mixed>
      */
-    public function merge(array $options)
+    public function merge(array $options): Options
     {
         return new self(array_merge_recursive($options, $this->options));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(): array
+    {
+        return $this->options;
     }
 }

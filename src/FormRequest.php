@@ -20,40 +20,40 @@ use Symfony\Component\HttpFoundation\Response;
 class FormRequest
 {
     /**
-     * @var Request
+     * @var null|Request
      */
     private $request;
 
     /**
-     * @var mixed
+     * @var null|mixed
      */
     private $response;
 
     /**
-     * @var FormInterface
+     * @var null|FormInterface<FormInterface>
      */
     private $form;
 
     /**
-     * @var array
+     * @var Options
      */
     private $options;
 
     /**
-     * @param FormInterface $form
-     * @param Request       $request
-     * @param Response      $response
-     * @param Options       $options
+     * @param null|FormInterface<FormInterface> $form
+     * @param null|Request                      $request
+     * @param null|Response                     $response
+     * @param null|Options                      $options
      */
     public function __construct(FormInterface $form = null, Request $request = null, Response $response = null, Options $options = null)
     {
         $this->form = $form;
         $this->request = $request;
         $this->response = $response ?: new Response();
-        $this->options = $options;
+        $this->options = $options ?: Options::fromArray([]);
     }
 
-    public function getRequest(): Request
+    public function getRequest(): ?Request
     {
         return $this->request;
     }
@@ -63,21 +63,33 @@ class FormRequest
         $this->request = $request;
     }
 
+    /**
+     * @return mixed|Response|null
+     */
     public function getResponse()
     {
         return $this->response;
     }
 
+    /**
+     * @param mixed|Response|null $response
+     */
     public function setResponse($response): void
     {
         $this->response = $response;
     }
 
-    public function getForm(): FormInterface
+    /**
+     * @return FormInterface<FormInterface>|null
+     */
+    public function getForm(): ?FormInterface
     {
         return $this->form;
     }
 
+    /**
+     * @param FormInterface<FormInterface> $form
+     */
     public function setForm(FormInterface $form): void
     {
         $this->form = $form;
@@ -88,8 +100,11 @@ class FormRequest
         return $this->options;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function addOptions(array $options): void
     {
-        $this->options = Options::fromArray($options)->merge($this->options);
+        $this->options = Options::fromArray($options)->merge($this->options->toArray());
     }
 }

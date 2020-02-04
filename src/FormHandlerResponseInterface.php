@@ -19,6 +19,8 @@ interface FormHandlerResponseInterface
 {
     /**
      * Return the default response for a form (E.G rendering a template).
+     *
+     * @return mixed|Response|null
      */
     public function getResponse(FormRequest $formRequest);
 }

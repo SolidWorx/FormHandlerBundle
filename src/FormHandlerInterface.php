@@ -22,7 +22,7 @@ interface FormHandlerInterface
      * @param FormFactoryInterface $factory The factory can be used to instantiate a form
      * @param Options              $options Any custom data to be used in creating the form (This can be form options, api values etc)
      *
-     * @return string|FormInterface The form to use for this handler
+     * @return string|FormInterface<FormInterface>|mixed The form to use for this handler
      */
     public function getForm(FormFactoryInterface $factory, Options $options);
 }

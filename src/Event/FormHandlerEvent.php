@@ -21,12 +21,12 @@ use Symfony\Component\Form\FormInterface;
 class FormHandlerEvent extends Event
 {
     /**
-     * @var FormInterface
+     * @var null|FormInterface
      */
     private $form;
 
     /**
-     * @var FormHandlerInterface
+     * @var null|FormHandlerInterface
      */
     private $handler;
 
@@ -41,15 +41,15 @@ class FormHandlerEvent extends Event
     private $formRequest;
 
     /**
-     * @param FormHandlerInterface $handler
-     * @param FormInterface        $form
-     * @param FormRequest          $formRequest
+     * @param null|FormHandlerInterface $handler
+     * @param null|FormInterface        $form
+     * @param null|FormRequest          $formRequest
      */
     public function __construct(FormHandlerInterface $handler = null, FormInterface $form = null, FormRequest $formRequest = null)
     {
         $this->handler = $handler;
         $this->form = $form;
-        $this->formRequest = $formRequest;
+        $this->formRequest = $formRequest ?: new FormRequest();
     }
 
     /**
@@ -65,9 +65,6 @@ class FormHandlerEvent extends Event
         $this->form = $form;
     }
 
-    /**
-     * @return FormHandlerInterface
-     */
     public function getHandler(): ?FormHandlerInterface
     {
         return $this->handler;
@@ -78,20 +75,23 @@ class FormHandlerEvent extends Event
         $this->handler = $handler;
     }
 
+    /**
+     * @param mixed $response
+     */
     public function setResponse($response): void
     {
         $this->response = $response;
     }
 
+    /**
+     * @return mixed
+     */
     public function getResponse()
     {
         return $this->response;
     }
 
-    /**
-     * @return FormRequest
-     */
-    public function getFormRequest(): ?FormRequest
+    public function getFormRequest(): FormRequest
     {
         return $this->formRequest;
     }

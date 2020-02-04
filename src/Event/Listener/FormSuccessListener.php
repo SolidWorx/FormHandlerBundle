@@ -25,10 +25,13 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class FormSuccessListener implements EventSubscriberInterface
 {
     /**
-     * @var Session
+     * @var Session<string>
      */
     private $session;
 
+    /**
+     * @param Session<string> $session
+     */
     public function __construct(Session $session) // Don't type-hint against SessionInterface, as the interface doesn't have the getFlashBag method
     {
         $this->session = $session;
@@ -36,6 +39,8 @@ class FormSuccessListener implements EventSubscriberInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return array<string, array<mixed>|string>
      */
     public static function getSubscribedEvents(): array
     {

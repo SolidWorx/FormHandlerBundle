@@ -15,6 +15,10 @@ namespace SolidWorx\FormHandler\Exception;
 
 class InvalidHandlerException extends \LogicException
 {
+    /**
+     * @param string $expected
+     * @param mixed  $actual
+     */
     public function __construct(string $expected, $actual)
     {
         parent::__construct(sprintf('Handler is expected to be of type "%s", "%s" given', $expected, is_object($actual) ? get_class($actual) : gettype($actual)));
