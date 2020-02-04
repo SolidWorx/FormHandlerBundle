@@ -32,4 +32,5 @@ install:
   - composer update -n "$COMPOSER_OPTIONS"
 
 script:
+    - vendor/bin/phpstan analyse src --level=max
     - vendor/bin/simple-phpunit
