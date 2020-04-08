@@ -27,7 +27,7 @@ class TestFormHandlerWithSuccessHandlerThrowsExceptionInterface implements FormH
         /* noop */
     }
 
-    public function onSuccess($data, FormRequest $form): ?Response
+    public function onSuccess(FormRequest $form, $data): ?Response
     {
         throw new \Exception('Invalid call');
     }

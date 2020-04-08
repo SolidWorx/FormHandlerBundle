@@ -22,5 +22,5 @@ interface FormHandlerSuccessInterface
      *
      * @param mixed $data The data that is returned from the form
      */
-    public function onSuccess($data, FormRequest $form): ?Response;
+    public function onSuccess(FormRequest $form, $data): ?Response;
 }

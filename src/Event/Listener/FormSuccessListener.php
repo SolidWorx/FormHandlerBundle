@@ -63,7 +63,7 @@ class FormSuccessListener implements EventSubscriberInterface
                 return;
             }
 
-            $response = $handler->onSuccess($form->getData(), $event->getFormRequest());
+            $response = $handler->onSuccess($event->getFormRequest(), $form->getData());
 
             if ($response instanceof Response) {
                 $event->setResponse($response);

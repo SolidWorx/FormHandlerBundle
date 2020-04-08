@@ -27,7 +27,7 @@ class TestFormHandlerWithSuccessHandlerInterface implements FormHandlerInterface
         /* noop */
     }
 
-    public function onSuccess($data, FormRequest $form): ?Response
+    public function onSuccess(FormRequest $form, $data): ?Response
     {
         return new Response();
     }
