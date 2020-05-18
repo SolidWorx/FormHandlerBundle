@@ -109,9 +109,9 @@ final class FormHandler
         $event = new FormHandlerEvent($handler, $form, $formRequest);
 
         if ($form->isValid()) {
-            $this->dispatcher->dispatch(FormHandlerEvents::EVENT_FORM_SUCCESS, $event);
+            $this->dispatcher->dispatch($event, FormHandlerEvents::EVENT_FORM_SUCCESS);
         } else {
-            $this->dispatcher->dispatch(FormHandlerEvents::EVENT_FORM_FAIL, $event);
+            $this->dispatcher->dispatch($event, FormHandlerEvents::EVENT_FORM_FAIL);
         }
 
         if ($response = $event->getResponse()) {
