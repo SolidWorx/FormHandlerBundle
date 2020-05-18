@@ -27,11 +27,11 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "symfony/framework-bundle": "^4.0 || ^5.0",
+        "symfony/framework-bundle": "^4.4 || ^5.0",
         "symfony/form": "^4.0 || ^5.0",
-        "symfony/event-dispatcher": "^4.0 || ^5.0",
-        "symfony/http-foundation": "^4.0 || ^5.0",
-        "symfony/options-resolver": "^4.0 || ^5.0"
+        "symfony/event-dispatcher": "^4.4 || ^5.0",
+        "symfony/http-foundation": "^4.4 || ^5.0",
+        "symfony/options-resolver": "^4.4 || ^5.0"
     },
     "require-dev": {
         "doctrine/common": "^2.7",
