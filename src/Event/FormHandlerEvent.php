@@ -15,7 +15,7 @@ namespace SolidWorx\FormHandler\Event;
 
 use SolidWorx\FormHandler\FormHandlerInterface;
 use SolidWorx\FormHandler\FormRequest;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\Form\FormInterface;
 
 class FormHandlerEvent extends Event
