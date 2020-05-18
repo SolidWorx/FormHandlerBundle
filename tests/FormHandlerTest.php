@@ -36,7 +36,7 @@ class FormHandlerTest extends TestCase
         $testHandler = new TestFormHandler();
         $formHandler->registerHandler($testHandler);
 
-        $this->assertAttributeEquals([TestFormHandler::class => $testHandler], 'handlers', $formHandler);
+        $this->assertSame([TestFormHandler::class => $testHandler], $formHandler->getHandlers());
     }
 
     public function testHandlerFormNotSubmitted()
@@ -91,7 +91,7 @@ class FormHandlerTest extends TestCase
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->once())
             ->method('dispatch')
-            ->with(FormHandlerEvents::EVENT_FORM_SUCCESS);
+            ->with($this->anything(), FormHandlerEvents::EVENT_FORM_SUCCESS);
 
         $formHandler = new FormHandler($requestStack, $dispatcher, $factory);
         $formHandler->registerHandler(new TestFormHandler());
@@ -125,7 +125,7 @@ class FormHandlerTest extends TestCase
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->once())
             ->method('dispatch')
-            ->with(FormHandlerEvents::EVENT_FORM_FAIL);
+            ->with($this->anything(), FormHandlerEvents::EVENT_FORM_FAIL);
 
         $formHandler = new FormHandler($requestStack, $dispatcher, $factory);
         $formHandler->registerHandler(new TestFormHandler());

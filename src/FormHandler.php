@@ -166,4 +166,12 @@ final class FormHandler
 
         return $form;
     }
+
+    /**
+     * @return FormHandlerInterface[]
+     */
+    public function getHandlers(): array
+    {
+        return $this->handlers;
+    }
 }

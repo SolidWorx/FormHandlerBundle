@@ -18,14 +18,14 @@ use SolidWorx\FormHandler\Event\Listener\FormHandlerResponseListener;
 use SolidWorx\FormHandler\FormRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class FormHandlerResponseListenerTest extends TestCase
 {
     public function testControllerNotReturningFormRequest()
     {
-        $event = new GetResponseForControllerResultEvent($this->createMock(HttpKernelInterface::class), Request::createFromGlobals(), HttpKernelInterface::MASTER_REQUEST, new Response());
+        $event = new ViewEvent($this->createMock(HttpKernelInterface::class), Request::createFromGlobals(), HttpKernelInterface::MASTER_REQUEST, new Response());
 
         $listener = new FormHandlerResponseListener();
 
@@ -36,7 +36,7 @@ class FormHandlerResponseListenerTest extends TestCase
 
     public function testControllerReturningFormRequest()
     {
-        $event = new GetResponseForControllerResultEvent($this->createMock(HttpKernelInterface::class), Request::createFromGlobals(), HttpKernelInterface::MASTER_REQUEST, new FormRequest());
+        $event = new ViewEvent($this->createMock(HttpKernelInterface::class), Request::createFromGlobals(), HttpKernelInterface::MASTER_REQUEST, new FormRequest());
 
         $listener = new FormHandlerResponseListener();
 

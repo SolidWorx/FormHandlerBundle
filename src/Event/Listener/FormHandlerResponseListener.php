@@ -16,7 +16,7 @@ namespace SolidWorx\FormHandler\Event\Listener;
 use SolidWorx\FormHandler\FormRequest;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class FormHandlerResponseListener implements EventSubscriberInterface
@@ -34,7 +34,7 @@ class FormHandlerResponseListener implements EventSubscriberInterface
     /**
      * @throws \Exception
      */
-    public function onKernelView(GetResponseForControllerResultEvent $event): void
+    public function onKernelView(ViewEvent $event): void
     {
         $result = $event->getControllerResult();
 
