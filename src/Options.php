@@ -69,6 +69,7 @@ class Options implements \ArrayAccess, \Countable, \IteratorAggregate
         return array_key_exists($offset, $this->options);
     }
 
+    #[\ReturnTypeWillChange]
     /**
      * {@inheritdoc}
      *
