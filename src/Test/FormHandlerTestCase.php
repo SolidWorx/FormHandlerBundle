@@ -166,7 +166,7 @@ abstract class FormHandlerTestCase extends TestCase
             return;
         }
 
-        $dispatcher->addListener(FormHandlerEvents::EVENT_FORM_SUCCESS, function (FormHandlerEvent $event) use ($handler) {
+        $dispatcher->addListener(FormHandlerEvents::EVENT_FORM_FAIL, function (FormHandlerEvent $event) use ($handler) {
             $form = $event->getForm();
 
             if (!$form instanceof FormInterface) {
