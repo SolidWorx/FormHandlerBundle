@@ -20,6 +20,7 @@ use SolidWorx\FormHandler\FormHandlerSuccessInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class FormSuccessListener implements EventSubscriberInterface
@@ -32,9 +33,9 @@ class FormSuccessListener implements EventSubscriberInterface
     /**
      * @param Session<string> $session
      */
-    public function __construct(Session $session) // Don't type-hint against SessionInterface, as the interface doesn't have the getFlashBag method
+    public function __construct(RequestStack $requestStack)
     {
-        $this->session = $session;
+        $this->session = $requestStack->getCurrentRequest()->getSession();
     }
 
     /**

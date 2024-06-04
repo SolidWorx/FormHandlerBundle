@@ -5,7 +5,7 @@ services:
 
     solidworx.form_handler.success:
         class: SolidWorx\FormHandler\Event\Listener\FormSuccessListener
-        arguments: ['@session']
+        arguments: ['@request_stack']
         tags:
           - { name: 'kernel.event_subscriber' }
 
