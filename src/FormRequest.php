@@ -42,12 +42,12 @@ class FormRequest
     /**
      * @param FormInterface<FormInterface>|null $form
      */
-    public function __construct(FormInterface $form = null, Request $request = null, Response $response = null, Options $options = null)
+    public function __construct(?FormInterface $form = null, ?Request $request = null, ?Response $response = null, ?Options $options = null)
     {
         $this->form = $form;
         $this->request = $request;
-        $this->response = $response ?: new Response();
-        $this->options = $options ?: Options::fromArray([]);
+        $this->response = $response ?? new Response();
+        $this->options = $options ?? Options::fromArray([]);
     }
 
     public function getRequest(): ?Request
