@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace SolidWorx\FormHandler\Test;
 
-use PHPUnit\Framework\TestCase;
 use SolidWorx\FormHandler\Event\FormHandlerEvent;
 use SolidWorx\FormHandler\Event\FormHandlerEvents;
 use SolidWorx\FormHandler\FormHandler;
@@ -21,6 +20,7 @@ use SolidWorx\FormHandler\FormHandlerFailInterface;
 use SolidWorx\FormHandler\FormHandlerInterface;
 use SolidWorx\FormHandler\FormHandlerSuccessInterface;
 use SolidWorx\FormHandler\FormRequest;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationRequestHandler;
@@ -38,7 +38,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
-abstract class FormHandlerTestCase extends TestCase
+abstract class FormHandlerTestCase extends KernelTestCase
 {
     /**
      * @var FormFactoryInterface
