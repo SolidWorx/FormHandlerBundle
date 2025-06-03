@@ -40,7 +40,7 @@ class FormHandlerEvent extends Event
      */
     private $formRequest;
 
-    public function __construct(FormHandlerInterface $handler = null, FormInterface $form = null, FormRequest $formRequest = null)
+    public function __construct(?FormHandlerInterface $handler = null, ?FormInterface $form = null, ?FormRequest $formRequest = null)
     {
         $this->handler = $handler;
         $this->form = $form;
